@@ -1,0 +1,15 @@
+@mixin text_cast_shadow($radius: 2px, $opacity: 0.2) {
+    text-shadow: 3px 3px $radius rgba($imperkaBlack, $opacity);
+}
+
+@mixin block_cast_shadow($radius: 2px, $opacity: 0.2) {
+    box-shadow: 3px 3px $radius rgba($imperkaBlack, $opacity);
+}
+
+@mixin linear_gradient($deg: 0deg, $scale: 255) {
+    background: linear-gradient($deg, rgba($scale, $scale, $scale, 1) 0%, rgba($scale, $scale, $scale, 0.75) 15%, rgba($scale, $scale, $scale, 0) 50%, rgba($scale, $scale, $scale, 0) 100%);
+}
+
+@mixin with_border {
+    border: 1px solid rgba(200, 200, 200);
+}

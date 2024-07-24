@@ -1,0 +1,21 @@
+@import '~/assets/scss/abstractions/mixins.scss';
+
+.header-text {
+    text-transform: uppercase;
+    font-family: 'Header Font', sans-serif;
+    color: $imperkaYellow;
+}
+
+.title-text {
+    text-transform: uppercase;
+    font-family: 'Title Font', sans-serif;
+    color: $imperkaBlack;
+}
+
+.background {
+    @include linear_gradient(0, 210);
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    z-index: -1000;
+}
