@@ -12,4 +12,4 @@ To run this project in dev mode with docker compose:
 docker compose -f .\docker-compose.dev.yml up --watch
 ```
 
-It will enable hot reload while developing
+It will enable hot reload for easier developing process.
