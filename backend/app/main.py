@@ -1,14 +1,13 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
-from core.config import settings
+from core.security import oauth2_scheme
+from routes import auth
+from typing import Annotated
 
 app = FastAPI(openapi_prefix='/api/v1')
-security = HTTPBasic()
+    
+app.include_router(auth.router)
 
-@app.get("/test")
-def testing():
-    return {
-        "username": settings.username,
-        "password": settings.password,
-        "secret_key": settings.secret_key
-    }
+@app.get('/test')
+def test(token: Annotated[str, Depends(oauth2_scheme)]):
+    return {"message": "yes"}
