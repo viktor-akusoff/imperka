@@ -1,6 +1,8 @@
 <template>
-    <div class="w-100 d-flex flex-row justify-content-end" v-if="authenticated">
-        <button class="btn btn-sm btn-danger" @click="logout()">Выйти</button>
+    <div class="w-100 d-flex flex-row gap-1 justify-content-start" v-if="authenticated">
+        <button class="btn btn-sm btn-primary" @click="router.push('/pages')">Страницы</button>
+        <button class="btn btn-sm btn-success" @click="router.push('/new')">Новая страница</button>
+        <button class="btn btn-sm btn-danger ms-auto" @click="logout()">Выйти</button>
     </div>
 </template>
 
