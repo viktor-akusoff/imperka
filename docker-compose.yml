@@ -10,5 +10,17 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+      secrets:
+        - secret_key
+        - password
+        - username
     ports:
       - "8000:8000"
+
+secrets:
+  secret_key:
+    file: ./secret_key
+  password:
+    file: ./password
+  username:
+    file: ./username

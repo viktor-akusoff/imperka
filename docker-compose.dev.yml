@@ -21,6 +21,10 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+      secrets:
+        - secret_key
+        - password
+        - username
     ports:
       - "8000:8000"
     develop:
@@ -31,3 +35,11 @@ services:
         - action: rebuild
           path: ./backend/requirements.txt
           target: /code/requirements.txt
+
+secrets:
+  secret_key:
+    file: ./secret_key
+  password:
+    file: ./password
+  username:
+    file: ./username
