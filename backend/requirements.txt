@@ -1,2 +1,3 @@
 fastapi==0.111.1
-pyjwt
+pyjwt[crypto]==2.8.0
+passlib==1.7.4
