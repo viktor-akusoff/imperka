@@ -8,3 +8,7 @@ class TokensResponse(BaseModel):
 
 class RefreshTokenRequest(BaseModel):
     refresh_token: str
+    
+    
+class User(BaseModel):
+    username: str

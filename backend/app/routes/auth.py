@@ -1,11 +1,13 @@
+import jwt
 import secrets
+from typing import Annotated
 from datetime import timedelta
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from core.config import settings
 from core import security
-from models.auth import TokensResponse, RefreshTokenRequest
-import jwt
+from models.auth import TokensResponse, RefreshTokenRequest, User
+
 
 USERNAME = settings.username
 PASSWORD = settings.password
@@ -61,3 +63,8 @@ def refresh_token(request: RefreshTokenRequest):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Refresh token expired")
     except jwt.InvalidTokenError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid refresh token")
+
+
+@router.get('/check')
+def test(current_user: Annotated[User, Depends(security.get_current_user)]):
+    return {"authenticated": "yes"}

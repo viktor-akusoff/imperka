@@ -16,6 +16,9 @@ services:
           path: ./frontend/pages
           target: /usr/src/app/pages
         - action: sync
+          path: ./frontend/app.vue
+          target: /usr/src/app/app.vue
+        - action: sync
           path: ./frontend/nuxt.config.ts
           target: /usr/src/app/nuxt.config.ts
         - action: rebuild

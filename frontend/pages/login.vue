@@ -26,19 +26,40 @@
 
     const config = useRuntimeConfig()
 
+    const router = useRouter();
+
+    const refreshToken = useState('refresh_token')
+    const accessToken = useState('access_token')
+    const authenticated = useState('authenticated')
+
     async function login() {
         loginError.value = false
         const url = config.public.apiUrl + '/auth/token'
         await axios
             .postForm(url, userData.value)
             .then((response) => {
-                console.log(response.data)
+                refreshToken.value = response.data['refresh_token']
+                accessToken.value = response.data['access_token']
+                localStorage.setItem('refresh_token', refreshToken.value)
+                localStorage.setItem('access_token', accessToken.value)
+                axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`
+                authenticated.value = true
+                router.push('/')
             })
             .catch((error) => {
                 console.log(error)
                 loginError.value = true
             })
     }
+
+    onMounted(async () => {
+      const url = config.public.apiUrl + '/auth/check'
+      await axios
+        .get(url)
+        .then((response) => {
+            router.push('/')
+        })
+    })
 
 </script>
 
