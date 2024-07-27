@@ -66,6 +66,26 @@
             </div>
         </div>
         <PageEditorBlocks @addParagraph="pushTextBlock()" @addImage="pushImageBlock()" @addHTML="pushHTMLBlock()"/>
+        <div class="d-flex flex-row gap-2 w-100 flex-wrap">
+            <div :key="hashtagsKey">
+                <span class="me-3">Хэштеги:</span>
+                <span class="badge bg-primary me-1" v-for="(h, index) in hashtags" :key="index">
+                    {{ h }} <button class="btn-close" @click="deleteHashtag(index)">x</button>
+                </span>
+            </div>
+            <div class="input-group input-group-sm w-25">
+                <input type="text" class="form-control" placeholder="хэштег" v-model="hashtag">
+                <button class="btn btn-secondary" :disabled="!hashtag" type="button" @click="addHashtag()">+</button>
+            </div>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">slug</span>
+            <input type="text" class="form-control" placeholder="Введите url страницы" v-model="slug">
+        </div>
+        <div class="d-flex flex-row gap-2">
+            <button class="btn btn-success flex-grow-1">Сохранить</button>
+            <button class="btn btn-danger">Удалить</button>
+        </div>
     </ClientOnly>
 </template>
 
@@ -108,12 +128,33 @@
     }
 
     const defaultBlocks: IBlock[] = []
+    const defaultHashtags: String[] = []
 
     const header = ref(defaultHeaderBlock)
 
     const blocks = ref(defaultBlocks)
 
+    const hashtags = ref(defaultHashtags)
+
+    const hashtag = ref('')
+
     const listKey = ref(false)
+    const hashtagsKey = ref(false)
+
+    const slug = ref('')
+
+    function deleteHashtag(index) {
+        hashtags.value.splice(index, 1)
+        hashtagsKey.value = !hashtagsKey.value
+    }
+
+    function addHashtag() {
+        if (hashtag.value) {
+            hashtags.value.push(hashtag.value)
+            hashtagsKey.value = !hashtagsKey.value
+            hashtag.value = ""
+        }
+    }
 
     function pushTextBlock() {
         blocks.value.push({
@@ -217,6 +258,13 @@
         @extend .btn;
         @extend .btn-sm;
         @extend .btn-secondary;
+    }
+
+    .btn-close {
+        border: none;
+        background: none;
+        font-weight: bold;
+        color: white;
     }
 
 </style>
