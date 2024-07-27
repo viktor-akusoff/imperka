@@ -29,7 +29,7 @@
                 </template>
             </div>
         </div>
-        <router-link class="btn btn-sm btn-success" :to="`/edit?page=${route.params.page}`" v-if="authenticated">Редактировать</router-link>
+        <router-link class="btn btn-sm btn-success mt-2" :to="`/edit?page=${route.params.page}`" v-if="authenticated">Редактировать</router-link>
     </div>
     <div v-else>Ошибка 404: Страница не найдена</div> 
 </template>
