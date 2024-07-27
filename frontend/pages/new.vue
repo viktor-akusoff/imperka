@@ -1,5 +1,5 @@
 <template>
-    <PageEditor/>
+    <PageEditor v-if="authenticated"/>
 </template>
 
 <script setup lang="ts">

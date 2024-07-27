@@ -1,6 +1,6 @@
 <template>
     <ClientOnly>
-        <div class="login-form">
+        <div class="login-form" v-if="!authenticated">
             <input type="text" class="form-control" placeholder="Логин" v-model="userData.username"/>
             <input type="password" class="form-control" placeholder="Пароль" v-model="userData.password"/>
             <p class="text-danger" v-if="loginError">Неверные логин или пароль!</p>
