@@ -13,4 +13,7 @@ class ImperkaSettings(BaseSettings):
     access_token_expire_in_minutes: int = Field(default=30)
     refresh_token_expire_in_days: int = Field(default=7)
     
+    mongodb_url: str = Field(default="mongodb://localhost:27017")
+    mongodb_db: str = Field(default="database")
+    
 settings = ImperkaSettings()

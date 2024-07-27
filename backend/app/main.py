@@ -1,10 +1,19 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from core.security import oauth2_scheme
+from contextlib import asynccontextmanager
 from routes import auth
-from typing import Annotated
+from core.database import Database
+from core.config import settings
 
-app = FastAPI(openapi_prefix='/api/v1')
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    print("Connecting to the database...")
+    database = Database(settings.mongodb_url, settings.mongodb_db)
+    yield
+    print("Closing the database...")
+    database.close()
+
+app = FastAPI(openapi_prefix='/api/v1', lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
