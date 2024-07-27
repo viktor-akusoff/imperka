@@ -98,8 +98,17 @@
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
     import { library } from '@fortawesome/fontawesome-svg-core'
     import { faTrash, faEye, faPencil, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons'
+import { onMounted } from 'vue';
 
     library.add(faTrash, faEye, faPencil, faArrowUp, faArrowDown)
+
+
+    const props = defineProps({
+        pageData: {
+            type: Object,
+            default: null
+        }
+    })
 
     const config = useRuntimeConfig()
 
@@ -154,6 +163,21 @@
     const pageId = ref("");
 
     const isSaving = ref(false)
+
+    onMounted(() => {
+        if (props.pageData) {
+            header.value.data.title = props.pageData.header.title
+            header.value.data.mediaType = props.pageData.header.media_type
+            header.value.data.mediaSource = props.pageData.header.media_source
+            header.value.data.text = props.pageData.header.text
+            slug.value = props.pageData.slug
+            hashtags.value = props.pageData.hashtags
+            console.log(props.pageData.blocks)
+            blocks.value = props.pageData.blocks.map((block) => {
+                return { type: block.type, data: block.data, mode: BlockStatus.Edit }
+            })
+        }
+    })
 
     function deleteHashtag(index) {
         hashtags.value.splice(index, 1)
@@ -242,10 +266,11 @@
                 slug: slug.value,
             };
             
-            if (pageId.value) {
-                await axios.put(`${config.public.apiUrl}/pages/${pageId.value}`, pageData);
+            if (props.pageData) {
+                const response = await axios.put(`${config.public.apiUrl}/pages/${props.pageData.slug}`, pageData)
+                router.push(`/${response.data.slug}`)
             } else {
-                const response = await axios.post(`${config.public.apiUrl}/pages/`, pageData);
+                const response = await axios.post(`${config.public.apiUrl}/pages/`, pageData)
                 router.push(`/${response.data.slug}`)
             }
         } catch (error) {

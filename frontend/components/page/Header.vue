@@ -41,6 +41,7 @@
     .header-block {
         @extend .rounded;
         @include with_border;
+        @extend .mb-5;
         background: white;
     }
 

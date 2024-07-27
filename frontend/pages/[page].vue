@@ -29,6 +29,7 @@
                 </template>
             </div>
         </div>
+        <router-link class="btn btn-sm btn-success" :to="`/edit?page=${route.params.page}`" v-if="authenticated">Редактировать</router-link>
     </div>
     <div v-else>Ошибка 404: Страница не найдена</div> 
 </template>
@@ -40,8 +41,11 @@ const pageData = ref(null)
 const isLoading = ref(true)
 const config = useRuntimeConfig()
 
+const authenticated = useState('authenticated')
+
+const route = useRoute();
+
 onMounted(async () => {
-    const route = useRoute();
     const slug = route.params.page;
     
     try {
