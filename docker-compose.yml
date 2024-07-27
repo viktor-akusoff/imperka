@@ -21,6 +21,16 @@ services:
     ports:
       - "8000:8000"
 
+  mongodb:
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=default
+    ports:
+      - "27016:27017"
+    volumes:
+      - ./mongodb_data:/data/db
+
 secrets:
   secret_key:
     file: ./secret_key
