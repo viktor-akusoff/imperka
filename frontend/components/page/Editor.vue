@@ -82,20 +82,26 @@
             <span class="input-group-text">slug</span>
             <input type="text" class="form-control" placeholder="Введите url страницы" v-model="slug">
         </div>
-        <div class="d-flex flex-row gap-2">
-            <button class="btn btn-success flex-grow-1">Сохранить</button>
+        <div class="d-flex flex-row gap-2" v-if="!isSaving">
+            <button class="btn btn-success flex-grow-1" @click="savePage()">Сохранить</button>
             <button class="btn btn-danger">Удалить</button>
+        </div>
+        <div v-else>
+            Идёт сохранение
         </div>
     </ClientOnly>
 </template>
 
 <script setup lang="ts">
+    import axios from 'axios';
     import imperka from 'assets/webm/imperka.webm'
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
     import { library } from '@fortawesome/fontawesome-svg-core'
     import { faTrash, faEye, faPencil, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons'
 
     library.add(faTrash, faEye, faPencil, faArrowUp, faArrowDown)
+
+    const config = useRuntimeConfig()
 
     enum BlockStatus {
         Preview = 'preview',
@@ -142,6 +148,10 @@
     const hashtagsKey = ref(false)
 
     const slug = ref('')
+
+    const pageId = ref("");
+
+    const isSaving = ref(false)
 
     function deleteHashtag(index) {
         hashtags.value.splice(index, 1)
@@ -211,6 +221,37 @@
             listKey.value = !listKey.value
         }
     };
+
+
+    async function savePage () {
+        isSaving.value = true
+        try {
+            const pageData = {
+                header: {
+                    title: header.value.data.title,
+                    text: header.value.data.text,
+                    media_type: header.value.data.mediaType,
+                    media_source: header.value.data.mediaSource
+                },
+                blocks: blocks.value.map((block) => {
+                    return { type: block.type, data: block.data };
+                }),
+                hashtags: hashtags.value,
+                slug: slug.value,
+            };
+            
+            if (pageId.value) {
+                await axios.put(`${config.public.apiUrl}/pages/${pageId.value}`, pageData);
+            } else {
+                const response = await axios.post(`${config.public.apiUrl}/pages/`, pageData);
+                pageId.value = response.data._id;
+            }
+        } catch (error) {
+            console.error("Error saving page:", error);
+        } finally {
+            isSaving.value = false
+        }
+    }
 
 </script>
 
