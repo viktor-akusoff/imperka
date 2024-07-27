@@ -133,6 +133,8 @@
         }
     }
 
+    const router = useRouter()
+
     const defaultBlocks: IBlock[] = []
     const defaultHashtags: String[] = []
 
@@ -244,7 +246,7 @@
                 await axios.put(`${config.public.apiUrl}/pages/${pageId.value}`, pageData);
             } else {
                 const response = await axios.post(`${config.public.apiUrl}/pages/`, pageData);
-                pageId.value = response.data._id;
+                router.push(`/${response.data.slug}`)
             }
         } catch (error) {
             console.error("Error saving page:", error);
