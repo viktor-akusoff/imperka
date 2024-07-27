@@ -34,7 +34,7 @@ services:
         - password
         - username
     environment:
-      - IMPERKA_MONGODB_URL=mongodb://127.0.0.1:27017
+      - IMPERKA_MONGODB_URL=mongodb://root:default@mongodb:27017
       - IMPERKA_MONGODB_DB=imperka_db
     ports:
       - "8000:8000"
