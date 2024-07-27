@@ -33,6 +33,8 @@ services:
         - secret_key
         - password
         - username
+    environment:
+      - MONGODB_URL=http://127.0.0.1:27017/api/v1
     ports:
       - "8000:8000"
     develop:
