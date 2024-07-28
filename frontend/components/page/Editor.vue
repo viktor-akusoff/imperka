@@ -93,8 +93,6 @@
 </template>
 
 <script setup lang="ts">
-    import axios from 'axios';
-    import imperka from 'assets/webm/imperka.webm'
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
     import { library } from '@fortawesome/fontawesome-svg-core'
     import { faTrash, faEye, faPencil, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons'
@@ -137,8 +135,8 @@
         data: {
             title: "Новая страница",
             text: "Вступительный текст новой страницы",
-            mediaType: "video",
-            mediaSource: imperka
+            mediaType: "image",
+            mediaSource: ""
         }
     }
 
