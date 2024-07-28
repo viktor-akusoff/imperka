@@ -61,17 +61,21 @@
 <style scoped lang="scss">
     @import '/assets/scss/main.scss';
 
+    [class^="swiper-slide"] {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+    
     .swiper__image {
         @extend .w-100;
         @extend .d-flex;
         @extend .flex-row;
         @extend .justify-content-around;
         @extend .align-items-center;
-        height: 60vh;
         object-fit: contain;
         img {
             @extend .rounded;
-            max-height: 100%;
+            max-height: 60vh;
             max-width: 100%;
         }
     }
