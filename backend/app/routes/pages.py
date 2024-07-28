@@ -68,7 +68,7 @@ async def update_page(slug: str, updated_page: Page, current_user: User = Depend
     updated_data = updated_page.model_dump(exclude_unset=True)  
 
     result = pages_collection.update_one({"_id": existing_page["_id"]}, {"$set": updated_data})
-    if result.modified_count == 1:
+    if result.matched_count >= 1:
         updated_page = pages_collection.find_one({"_id": existing_page["_id"]})
         return serialize_page(updated_page)
     else:
