@@ -9,29 +9,22 @@ import axios from 'axios'
 
 const pageData = ref(null)
 const isLoading = ref(true)
-const config = useRuntimeConfig()
 
 const router = useRouter()
-const authenticated = useState('authenticated')
+
+const { isAuthenticated, apiClient } = useAxios();
 
 onMounted(async () => {
 
-const url = config.public.apiUrl + '/auth/check'
-    await axios
-    .get(url)
-    .then((response) => {
-        authenticated.value = true
-    })
-    .catch((error) => {
-        authenticated.value = false
+    if (!isAuthenticated.value) {
         router.push('/')
-    })  
+    }  
 
     const route = useRoute();
     const slug = route.query?.page || 'undefined';
     
     try {
-        const response = await axios.get(`${config.public.apiUrl}/pages/${slug}`);
+        const response = await apiClient.get(`/pages/${slug}`);
         pageData.value = response.data;
         useHead({
             title: "РЕДАКТИРОВАНИЕ СТРАНИЦЫ"

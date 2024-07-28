@@ -98,10 +98,10 @@
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
     import { library } from '@fortawesome/fontawesome-svg-core'
     import { faTrash, faEye, faPencil, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons'
-import { onMounted } from 'vue';
 
     library.add(faTrash, faEye, faPencil, faArrowUp, faArrowDown)
 
+    const { apiClient } = useAxios();
 
     const props = defineProps({
         pageData: {
@@ -109,8 +109,6 @@ import { onMounted } from 'vue';
             default: null
         }
     })
-
-    const config = useRuntimeConfig()
 
     enum BlockStatus {
         Preview = 'preview',
@@ -267,10 +265,10 @@ import { onMounted } from 'vue';
             };
             
             if (props.pageData) {
-                const response = await axios.put(`${config.public.apiUrl}/pages/${props.pageData.slug}`, pageData)
+                const response = await apiClient.put(`/pages/${props.pageData.slug}`, pageData)
                 router.push(`/${response.data.slug}`)
             } else {
-                const response = await axios.post(`${config.public.apiUrl}/pages/`, pageData)
+                const response = await apiClient.post('/pages/', pageData)
                 router.push(`/${response.data.slug}`)
             }
         } catch (error) {

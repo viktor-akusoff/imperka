@@ -29,7 +29,7 @@
                 </template>
             </div>
         </div>
-        <router-link class="btn btn-sm btn-success mt-2" :to="`/edit?page=${route.params.page}`" v-if="authenticated">Редактировать</router-link>
+        <router-link class="btn btn-sm btn-success mt-2" :to="`/edit?page=${route.params.page}`" v-if="isAuthenticated">Редактировать</router-link>
     </div>
     <div v-else>Ошибка 404: Страница не найдена</div> 
 </template>
@@ -41,7 +41,7 @@ const pageData = ref(null)
 const isLoading = ref(true)
 const config = useRuntimeConfig()
 
-const authenticated = useState('authenticated')
+const { isAuthenticated } = useAxios();
 
 const route = useRoute();
 

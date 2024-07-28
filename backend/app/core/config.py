@@ -10,7 +10,7 @@ class ImperkaSettings(BaseSettings):
     password: str = Field(default="password")
     
     algorithm: str = Field(default="HS256")
-    access_token_expire_in_minutes: int = Field(default=30)
+    access_token_expire_in_minutes: int = Field(default=5)
     refresh_token_expire_in_days: int = Field(default=7)
     
     mongodb_url: str = Field(default="mongodb://localhost:27017")

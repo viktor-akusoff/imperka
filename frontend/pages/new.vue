@@ -1,12 +1,10 @@
 <template>
-    <PageEditor v-if="authenticated"/>
+    <PageEditor v-if="isAuthenticated"/>
 </template>
 
 <script setup lang="ts">
 
-    import axios from 'axios'
-
-    const config = useRuntimeConfig()
+    const { isAuthenticated } = useAxios();
 
     useHead({
         title: "НОВАЯ СТРАНИЦА"
@@ -14,18 +12,9 @@
 
     const router = useRouter();
 
-    const authenticated = useState('authenticated')
-
     onMounted(async () => {
-      const url = config.public.apiUrl + '/auth/check'
-      await axios
-        .get(url)
-        .then((response) => {
-            authenticated.value = true
-        })
-        .catch((error) => {
-            authenticated.value = false
+        if (!isAuthenticated.value) {
             router.push('/')
-        })   
+        } 
     })
 </script>

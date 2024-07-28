@@ -1,6 +1,6 @@
 <template>
     <ClientOnly>
-        <div class="login-form" v-if="!authenticated">
+        <div class="login-form" v-if="!isAuthenticated">
             <input type="text" class="form-control" placeholder="Логин" v-model="userData.username"/>
             <input type="password" class="form-control" placeholder="Пароль" v-model="userData.password"/>
             <p class="text-danger" v-if="loginError">Неверные логин или пароль!</p>
@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 
-    import axios from 'axios'
+    const { isAuthenticated, apiClient, setTokens} = useAxios();
 
     useHead({
       title: "ВХОД"
@@ -24,27 +24,16 @@
 
     const loginError = ref(false)
 
-    const config = useRuntimeConfig()
-
     const router = useRouter();
-
-    const refreshToken = useState('refresh_token')
-    const accessToken = useState('access_token')
-    const authenticated = useState('authenticated')
 
     async function login() {
         loginError.value = false
-        const url = config.public.apiUrl + '/auth/token'
-        await axios
-            .postForm(url, userData.value)
+        await apiClient
+            .postForm('/auth/token', userData.value)
             .then((response) => {
-                refreshToken.value = response.data['refresh_token']
-                accessToken.value = response.data['access_token']
-                localStorage.setItem('refresh_token', refreshToken.value)
-                localStorage.setItem('access_token', accessToken.value)
-                axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`
-                authenticated.value = true
+                setTokens(response.data['access_token'], response.data['refresh_token'])
                 router.push('/')
+                router.go(0);
             })
             .catch((error) => {
                 console.log(error)
@@ -53,12 +42,9 @@
     }
 
     onMounted(async () => {
-      const url = config.public.apiUrl + '/auth/check'
-      await axios
-        .get(url)
-        .then((response) => {
+        if (isAuthenticated.value) {
             router.push('/')
-        })
+        }
     })
 
 </script>
