@@ -84,7 +84,7 @@
         </div>
         <div class="d-flex flex-row gap-2" v-if="!isSaving">
             <button class="btn btn-success flex-grow-1" @click="save()">Сохранить</button>
-            <button class="btn btn-danger">Удалить</button>
+            <button class="btn btn-danger" v-if="!!pageData" @click="deletePage()"><FontAwesomeIcon icon="trash"/></button>
         </div>
         <div v-else>
             Идёт сохранение
@@ -329,6 +329,14 @@
         })
         isSaving.value = false
     }
+
+    async function deletePage() {
+        if(confirm('Вы действительно хотите удалить страницу?')) {
+            await apiClient
+                .delete(`/pages/${props.pageData.slug}`)
+            router.push('/')
+        }
+    } 
 
 </script>
 

@@ -51,8 +51,8 @@ onMounted(async () => {
         const response = await axios.get(`${config.public.apiUrl}/pages/index`);
         pageData.value = response.data;
         let seo = {
-            title: pageData.value.header.title.toUpperCase(),
-            ogTitle: pageData.value.header.title.toUpperCase(),
+            title: "ГЛАВНАЯ",
+            ogTitle: "ГЛАВНАЯ",
             description: pageData.value.header.text.replace(/(<([^>]+)>)/ig, ''),
             ogDescription: pageData.value.header.text.replace(/(<([^>]+)>)/ig, '')
         }
