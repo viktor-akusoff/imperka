@@ -34,7 +34,12 @@
     const isLoading = ref(true)
     const error = ref(false)
 
+    const router = useRouter()
+
     onMounted(() => {
+        if (!isAuthenticated.value) {
+            router.push('/')
+        }
         apiClient
             .get('/pages')
             .then((response) => {
