@@ -10,6 +10,7 @@ class BlockType(str, Enum):
     PARAGRAPH = 'paragraph'
     IMAGE = 'image'
     HTML = 'html'
+    SUGGESTION = 'suggestion'
     
     
 class MediaType(str, Enum):
@@ -42,7 +43,7 @@ class HTMLData(BaseModel):
 
 class Block(BaseModel):
     type: BlockType = Field()
-    data: ParagraphData | List[Image] | HTMLData
+    data: ParagraphData | List[Image] | List[str] | HTMLData
 
 
 class Page(BaseModel):

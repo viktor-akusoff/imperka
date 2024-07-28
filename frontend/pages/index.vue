@@ -30,7 +30,7 @@
         </div>
         <router-link class="btn btn-sm btn-success mt-2" :to="`/edit?page=index`" v-if="isAuthenticated">Редактировать</router-link>
     </div>
-    <div v-else>Ошибка 404: Страница не найдена</div> 
+    <div v-else>Ошибка 404: Страница не найдена</div>
 </template>
   
 <script setup lang="ts">
@@ -42,8 +42,8 @@ const config = useRuntimeConfig()
 
 const { isAuthenticated } = useAxios()
 
-
 const { getMedia } = useMedia()
+
 
 onMounted(async () => {
     

@@ -1,5 +1,5 @@
 from typing import List, Optional
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
 
 from core import security
 from core.database import db
@@ -41,10 +41,11 @@ async def create_page(page: Page, current_user: User = Depends(security.get_curr
 
 
 @router.get("/", response_model=List[PreviewPage])
-async def get_all_pages(hashtags: Optional[List[str]] = None):
+async def get_all_pages(hashtags: Optional[List[str]] = Query(None)):
     query = {}
     if hashtags:
         query["hashtags"] = {"$all": hashtags} 
+    print(hashtags)
     pages = list(pages_collection.find(query))
     return [PreviewPage(**serialize_page(page)) for page in pages]
 

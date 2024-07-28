@@ -9,16 +9,19 @@
         <button @click="$emit('addHTML')" class="blocks-panel__button"  title="Добавить HTML">
             <FontAwesomeIcon icon="code" />+
         </button>
+        <button @click="$emit('addSuggestion')" class="blocks-panel__button"  title="Добавить рекомендации">
+            <FontAwesomeIcon icon="newspaper" />+
+        </button>
     </div>
 </template>
 
 <script setup lang="ts">
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     import { library } from '@fortawesome/fontawesome-svg-core';
-    import { faParagraph, faImage, faCode } from '@fortawesome/free-solid-svg-icons';
-    library.add(faImage, faParagraph, faCode,);
+    import { faParagraph, faImage, faCode, faNewspaper } from '@fortawesome/free-solid-svg-icons';
+    library.add(faImage, faParagraph, faCode, faNewspaper);
 
-    defineEmits(['addParagraph', 'addImage', 'addHTML'])
+    defineEmits(['addParagraph', 'addImage', 'addHTML', 'addSuggestion'])
 
 </script>
 

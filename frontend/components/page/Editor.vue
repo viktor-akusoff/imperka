@@ -63,9 +63,18 @@
                     <PageEditorHTML v-if="block.mode == BlockStatus.Edit" v-model="block.data"/>
                     <PageHTML v-else-if="block.mode == BlockStatus.Preview" :htmlData="block.data"/>
                 </template>
+                <template v-else-if="block.type == BlockType.Suggestion">
+                    <PageEditorSuggestion v-if="block.mode == BlockStatus.Edit" v-model="block.data"/>
+                    <PageSuggestion v-else-if="block.mode == BlockStatus.Preview" :hashtags="block.data"/>
+                </template>
             </div>
         </div>
-        <PageEditorBlocks @addParagraph="pushTextBlock()" @addImage="pushImageBlock()" @addHTML="pushHTMLBlock()"/>
+        <PageEditorBlocks 
+            @addParagraph="pushTextBlock()" 
+            @addImage="pushImageBlock()"
+            @addHTML="pushHTMLBlock()"
+            @addSuggestion="pushSuggestionBlock()"
+        />
         <div class="d-flex flex-row gap-2 w-100 flex-wrap">
             <div :key="hashtagsKey">
                 <span class="me-3">Хэштеги:</span>
@@ -119,7 +128,8 @@
         Header = 'header',
         Paragraph = 'paragraph',
         Image = 'image',
-        HTML = 'html'
+        HTML = 'html',
+        Suggestion = 'suggestion'
     }
 
     interface IBlock {
@@ -216,6 +226,14 @@
                 html: '',
                 description: ''
             }
+        })
+    }
+
+    function pushSuggestionBlock() {
+        blocks.value.push({
+            type: BlockType.Suggestion,
+            mode: BlockStatus.Edit,
+            data: []
         })
     }
 
