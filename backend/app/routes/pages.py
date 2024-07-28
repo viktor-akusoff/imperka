@@ -4,8 +4,8 @@ from fastapi import APIRouter, Depends, HTTPException, status, Query
 from core import security
 from core.database import db
 from models.auth import User
-
-from models.pages import Page, PreviewPage
+import pymongo
+from models.pages import Page, PreviewPage, MenuPage
 
 
 pages_collection = db['pages']
@@ -45,9 +45,15 @@ async def get_all_pages(hashtags: Optional[List[str]] = Query(None)):
     query = {}
     if hashtags:
         query["hashtags"] = {"$all": hashtags} 
-    print(hashtags)
-    pages = list(pages_collection.find(query))
+    pages = list(pages_collection.find(query).sort([("order", pymongo.ASCENDING)]))
     return [PreviewPage(**serialize_page(page)) for page in pages]
+
+
+@router.get("/menu", response_model=List[MenuPage])
+async def get_menu_pages():
+    query = {"is_in_menu": True}
+    pages = list(pages_collection.find(query).sort([("order", pymongo.ASCENDING)]))
+    return [MenuPage(**serialize_page(page)) for page in pages]
 
 
 @router.get("/{slug}", response_model=Page)

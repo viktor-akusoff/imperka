@@ -30,6 +30,10 @@ class Header(BaseModel):
     media_source: str
     
     
+class HeaderMenu(BaseModel):
+    title: str
+    
+    
 class ParagraphData(BaseModel):
     title: Optional[str]
     alignment: Optional[str]
@@ -51,6 +55,8 @@ class Page(BaseModel):
     blocks: List[Block]
     hashtags: List[str]
     slug: str
+    is_in_menu: bool = Field(False)
+    order: int = Field(0)
     
     @field_validator('slug')
     def validate_slug(cls, value, values):
@@ -65,4 +71,8 @@ class Page(BaseModel):
 class PreviewPage(BaseModel):
     header: Header
     hashtags: List[str]
+    slug: str
+    
+class MenuPage(BaseModel):
+    header: HeaderMenu
     slug: str

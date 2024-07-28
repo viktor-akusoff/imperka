@@ -91,6 +91,22 @@
             <span class="input-group-text">slug</span>
             <input type="text" class="form-control" placeholder="Введите url страницы" v-model="slug">
         </div>
+        <div class="d-flex flex-row gap-2 align-items-center">
+            <div class="input-group mb-3 w-25">
+                <span class="input-group-text">Порядок</span>
+                <input type="number" class="form-control" v-model="order">
+            </div>
+            <div class="form-check">
+                <input 
+                    class="form-check-input" 
+                    type="checkbox" 
+                    id="flexCheckMenu"
+                    v-model="isInMenu"/> 
+                <label class="form-check-label" for="flexCheckMenu">
+                    Отображать в меню
+                </label>
+            </div>
+        </div>
         <div class="d-flex flex-row gap-2" v-if="!isSaving">
             <button class="btn btn-success flex-grow-1" @click="save()">Сохранить</button>
             <button class="btn btn-danger" v-if="!!pageData" @click="deletePage()"><FontAwesomeIcon icon="trash"/></button>
@@ -168,6 +184,10 @@
 
     const slug = ref('')
 
+    const isInMenu = ref(true)
+
+    const order = ref(0)
+
     const isSaving = ref(false)
 
     onMounted(() => {
@@ -177,6 +197,8 @@
             header.value.data.mediaSource = props.pageData.header.media_source
             header.value.data.text = props.pageData.header.text
             slug.value = props.pageData.slug
+            isInMenu.value = props.pageData.is_in_menu
+            order.value = props.pageData.order
             hashtags.value = props.pageData.hashtags
             console.log(props.pageData.blocks)
             blocks.value = props.pageData.blocks.map((block) => {
@@ -324,14 +346,18 @@
                 }),
                 hashtags: hashtags.value,
                 slug: slug.value,
+                order: order.value,
+                is_in_menu: isInMenu.value
             };
             
             if (props.pageData) {
                 const response = await apiClient.put(`/pages/${props.pageData.slug}`, pageData)
-                router.push(`/${response.data.slug}`)
+                await router.push(`/${response.data.slug}`)
+                router.go()
             } else {
                 const response = await apiClient.post('/pages/', pageData)
-                router.push(`/${response.data.slug}`)
+                await router.push(`/${response.data.slug}`)
+                router.go()
             }
         } catch (error) {
             console.error("Error saving page:", error);

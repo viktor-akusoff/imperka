@@ -13,9 +13,9 @@
         <li class="nav-item">
           <router-link class="nav-link imperka-link" aria-current="page" to="/">Главная</router-link>
         </li>
-        <!-- <li class="nav-item">
-          <router-link class="nav-link imperka-link" to="/evil">Портфолио</router-link>
-        </li> -->
+        <li class="nav-item" v-for="(page, index) in pages" :key="index">
+          <router-link class="nav-link imperka-link" :to="`/${page.slug}`">{{page.header.title}}</router-link>
+        </li>
       </ul>
       <form class="d-flex">
         <div v-if="isAuthenticated" class="d-flex gap-2">
@@ -40,13 +40,24 @@
 
     library.add(faFileText, faSignIn, faSignOut)
 
-    const { isAuthenticated, clearTokens } = useAxios();
+    const { isAuthenticated, clearTokens, apiClient } = useAxios();
     const router = useRouter()
+
+    const pages = ref([])
 
     function logout() {
         clearTokens()
         router.go()
     }
+
+    onMounted(async () => {
+      await apiClient
+        .get('/pages/menu')
+        .then((response) => {
+          pages.value = response.data
+        })
+    })
+
 </script>
 
 <style scoped lang="scss">
