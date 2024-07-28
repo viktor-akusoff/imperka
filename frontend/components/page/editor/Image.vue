@@ -2,7 +2,7 @@
     <div class="edit-image-block">
         <div class="edit-image-block__list">
             <div class="edit-image-block__element" v-for="(image, index) in imageList">
-                <img :src="image.url" :key="index">
+                <img :src="getMedia(image.url)" :key="index">
                 <div class="input-group">
                     <span class="input-group-text" id="edit-image-block__description">Подпись</span>
                     <input type="text" class="form-control" placeholder="Описание картинки" aria-describedby="edit-image-block__description" v-model="image.description"/>
@@ -42,10 +42,7 @@
 
     library.add(faTrash, faArrowLeft, faArrowRight)
 
-    type Image = {
-        image: String,
-        description: String,
-    }
+    const { getMedia } = useMedia()
 
     const model = defineModel()
     const imageList: any = ref([])

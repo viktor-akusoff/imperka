@@ -32,7 +32,7 @@
     >
         <swiper-slide v-for="(image, index) in images" :key="index">
             <div class="swiper__image">
-                <img :src="image.url">
+                <img :src="getMedia(image.url)">
             </div>
         </swiper-slide>
     </swiper-container>
@@ -40,6 +40,8 @@
 </template>
 
 <script setup lang="ts">
+
+    const { getMedia } = useMedia()
 
     const props: any = defineProps({
         images: {

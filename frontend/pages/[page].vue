@@ -6,7 +6,7 @@
             <PageHeader 
                 :titleText="pageData.header.title" 
                 :mediaType="pageData.header.media_type" 
-                :mediaSource="pageData.header.media_source"
+                :mediaSource="getMedia(pageData.header.media_source)"
             >
                 <p v-html="pageData.header.text"></p>
             </PageHeader>
@@ -41,9 +41,11 @@ const pageData = ref(null)
 const isLoading = ref(true)
 const config = useRuntimeConfig()
 
-const { isAuthenticated } = useAxios();
+const { isAuthenticated } = useAxios()
 
-const route = useRoute();
+const route = useRoute()
+
+const { getMedia } = useMedia()
 
 onMounted(async () => {
     const slug = route.params.page;

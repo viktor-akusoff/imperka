@@ -32,14 +32,14 @@
                 <div class="col mb-3">
                     <img
                         v-if="headerBlockData.mediaType === 'image' && headerBlockData.mediaSource"
-                        :src="headerBlockData.mediaSource"
+                        :src="getMedia(headerBlockData.mediaSource)"
                         alt="Preview"
                         height="100"
                         class="inline-block"
                     />
                     <video
                         v-if="headerBlockData.mediaType === 'video' && headerBlockData.mediaSource"
-                        :src="headerBlockData.mediaSource"
+                        :src="getMedia(headerBlockData.mediaSource)"
                         controls
                         width="300"
                         class="inline-block"
@@ -60,7 +60,7 @@
                 [{ direction: 'rtl' }], 
                 [{ size: ['small', false, 'large', 'huge'] }],
                 [{ header: 1 }, { header: 2 }],
-                ['link', 'image', 'video'],
+                ['link'],
                 [{ color: [] }, { background: [] }],
                 [{ font: [] }],
                 [{ align: [] }],
@@ -73,6 +73,8 @@
 <script setup lang="ts">
     import { QuillEditor } from '@vueup/vue-quill'
     import '@vueup/vue-quill/dist/vue-quill.snow.css'
+
+    const { getMedia } = useMedia()
 
     const defaultHeaderBlockData: any = {}
 

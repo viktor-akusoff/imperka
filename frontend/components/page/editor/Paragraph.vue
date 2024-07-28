@@ -33,7 +33,7 @@
                 [{ direction: 'rtl' }], 
                 [{ size: ['small', false, 'large', 'huge'] }],
                 [{ header: 1 }, { header: 2 }],
-                ['link', 'image', 'video'],
+                ['link'],
                 [{ color: [] }, { background: [] }],
                 [{ font: [] }],
                 [{ align: [] }],

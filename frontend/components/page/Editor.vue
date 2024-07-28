@@ -18,7 +18,7 @@
                 v-else-if="header.mode == BlockStatus.Preview"
                 :titleText="header.data.title" 
                 :mediaType="header.data.mediaType" 
-                :mediaSource="header.data.mediaSource"
+                :mediaSource="getMedia(header.data.mediaSource)"
             >
                 <p v-html="header.data.text"></p>
             </PageHeader>
@@ -83,7 +83,7 @@
             <input type="text" class="form-control" placeholder="Введите url страницы" v-model="slug">
         </div>
         <div class="d-flex flex-row gap-2" v-if="!isSaving">
-            <button class="btn btn-success flex-grow-1" @click="savePage()">Сохранить</button>
+            <button class="btn btn-success flex-grow-1" @click="save()">Сохранить</button>
             <button class="btn btn-danger">Удалить</button>
         </div>
         <div v-else>
@@ -102,6 +102,8 @@
     library.add(faTrash, faEye, faPencil, faArrowUp, faArrowDown)
 
     const { apiClient } = useAxios();
+
+    const { getMedia } = useMedia()
 
     const props = defineProps({
         pageData: {
@@ -157,8 +159,6 @@
     const hashtagsKey = ref(false)
 
     const slug = ref('')
-
-    const pageId = ref("");
 
     const isSaving = ref(false)
 
@@ -246,9 +246,55 @@
         }
     };
 
+    function dataURLtoBlob(dataurl) {
+        const arr = dataurl.split(',');
+        const mime = arr[0].match(/:(.*?);/)[1];
+        const bstr = atob(arr[1]);
+        let n = bstr.length;
+        const u8arr = new Uint8Array(n);
+
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+
+        return new Blob([u8arr], { type: mime });
+    }
+
+    async function uploadMedia() {
+        if (header.value.data.mediaSource.startsWith('data:')) {
+            const headerFormData = new FormData();
+            headerFormData.append('media', dataURLtoBlob(header.value.data.mediaSource));
+            try {
+                const response = await apiClient.post('/media/upload', headerFormData, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                });
+                header.value.data.mediaSource = response.data.media_id;
+            } catch (error) {
+                console.error('Header image upload failed:', error);
+            }
+        }
+
+        for (let i = 0; i < blocks.value.length; i++) {
+            if (blocks.value[i].type === BlockType.Image) {
+                for (let j = 0; j < blocks.value[i].data.length; j++) {
+                    if (blocks.value[i].data[j].url.startsWith('data:')) {
+                        const formData = new FormData();
+                        formData.append('media', dataURLtoBlob(blocks.value[i].data[j].url));
+                        try {
+                            const response = await apiClient.post('/media/upload', formData, {
+                                headers: { 'Content-Type': 'multipart/form-data' }
+                            });
+                            blocks.value[i].data[j].url = response.data.media_id;
+                        } catch (error) {
+                            console.error('Image upload failed:', error);
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     async function savePage () {
-        isSaving.value = true
         try {
             const pageData = {
                 header: {
@@ -273,9 +319,15 @@
             }
         } catch (error) {
             console.error("Error saving page:", error);
-        } finally {
-            isSaving.value = false
         }
+    }
+
+    async function save() {
+        isSaving.value = true
+        await uploadMedia().then(() => {
+            savePage()
+        })
+        isSaving.value = false
     }
 
 </script>
