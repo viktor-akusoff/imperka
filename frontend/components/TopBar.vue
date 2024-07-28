@@ -1,4 +1,5 @@
 <template>
+<ClientOnly>
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
   <div class="container-fluid">
     <router-link class="navbar-brand" to="/">
@@ -26,6 +27,7 @@
     </div>
   </div>
 </nav>
+</ClientOnly>
 </template>
 
 <script setup lang="ts">
