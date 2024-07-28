@@ -1,4 +1,3 @@
-<!-- [page].vue -->
 <template>
     <div v-if="isLoading">Загрузка...</div>
     <div v-else-if="pageData">
