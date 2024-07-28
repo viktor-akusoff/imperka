@@ -26,6 +26,9 @@
                 <template v-else-if="block.type === 'html'">
                     <PageHTML :htmlData="block.data"/>
                 </template>
+                <template v-else-if="block.type === 'suggestion'">
+                    <PageSuggestion :hashtags="block.data"/>
+                </template>
             </div>
         </div>
         <router-link class="btn btn-sm btn-success mt-2" :to="`/edit?page=index`" v-if="isAuthenticated">Редактировать</router-link>

@@ -25,6 +25,9 @@ services:
           path: ./frontend/utils
           target: /usr/src/app/utils
         - action: sync
+          path: ./frontend/assets
+          target: /usr/src/app/assets
+        - action: sync
           path: ./frontend/nuxt.config.ts
           target: /usr/src/app/nuxt.config.ts
         - action: rebuild

@@ -1,12 +1,43 @@
 <template>
-    <div class="w-100 d-flex flex-row gap-1 justify-content-start" v-if="isAuthenticated">
-        <button class="btn btn-sm btn-primary" @click="router.push('/pages')">Страницы</button>
-        <button class="btn btn-sm btn-success" @click="router.push('/new')">Новая страница</button>
-        <button class="btn btn-sm btn-danger ms-auto" @click="logout()">Выйти</button>
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
+  <div class="container-fluid">
+    <router-link class="navbar-brand" to="/">
+        <img :src="imperka" style="max-width: 64px;"/>
+    </router-link>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <router-link class="nav-link imperka-link" aria-current="page" to="/">Главная</router-link>
+        </li>
+        <!-- <li class="nav-item">
+          <router-link class="nav-link imperka-link" to="/evil">Портфолио</router-link>
+        </li> -->
+      </ul>
+      <form class="d-flex">
+        <div v-if="isAuthenticated" class="d-flex gap-2">
+            <router-link to="/new" class="btn btn-outline-success btn-sm" title="Новая страница"><FontAwesomeIcon icon="file-text" /> + </router-link>
+            <button class="btn btn-outline-danger btn-sm" @click="logout()" title="Выйти"><FontAwesomeIcon icon="sign-out" /></button>
+        </div>
+        <router-link to="/login" class="btn btn-outline-warning btn-sm" v-else title="Войти"><FontAwesomeIcon icon="sign-in" /></router-link>
+      </form>
     </div>
+  </div>
+</nav>
 </template>
 
 <script setup lang="ts">
+    
+    import imperka from 'assets/png/imperka.png'
+
+    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+    import { library } from '@fortawesome/fontawesome-svg-core'
+    import { faFileText, faSignIn, faSignOut } from '@fortawesome/free-solid-svg-icons'
+
+    library.add(faFileText, faSignIn, faSignOut)
+
     const { isAuthenticated, clearTokens } = useAxios();
     const router = useRouter()
 
@@ -18,4 +49,9 @@
 
 <style scoped lang="scss">
     @import '/assets/scss/main.scss';
+
+    .imperka-link {
+        @extend .text-uppercase;
+        font-family: 'Title Font';
+    }
 </style>
