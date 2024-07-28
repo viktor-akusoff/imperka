@@ -59,3 +59,9 @@ class Page(BaseModel):
             if header_title: 
                 value = slugify(header_title) 
         return value
+    
+    
+class PreviewPage(BaseModel):
+    header: Header
+    hashtags: List[str]
+    slug: str

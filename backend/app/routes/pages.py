@@ -5,13 +5,10 @@ from core import security
 from core.database import db
 from models.auth import User
 
-from models.pages import Page
-# Database Setup (replace with your actual settings)
-DATABASE_URL = "mongodb://localhost:27017"
-DATABASE_NAME = "your_database_name"
-PAGES_COLLECTION_NAME = "pages"
+from models.pages import Page, PreviewPage
 
-pages_collection = db[PAGES_COLLECTION_NAME]
+
+pages_collection = db['pages']
 
 router = APIRouter(prefix="/pages", tags=["Pages"])
 
@@ -43,10 +40,10 @@ async def create_page(page: Page, current_user: User = Depends(security.get_curr
     return serialize_page(created_page)
 
 
-@router.get("/", response_model=List[Page])
+@router.get("/", response_model=List[PreviewPage])
 async def get_all_pages():
     pages = list(pages_collection.find())
-    return [serialize_page(page) for page in pages]
+    return [PreviewPage(**serialize_page(page)) for page in pages]
 
 
 @router.get("/{slug}", response_model=Page)
