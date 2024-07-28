@@ -42,7 +42,7 @@
                     <button @click="moveBlockDown(index)" class="blocks__arrow-button" :disabled="index === blocks.length - 1" title="Вниз">
                         <FontAwesomeIcon icon="arrow-down" />
                     </button>
-                    <button class="blocks__remove-button" @click="removeBlock(index)">
+                    <button class="blocks__remove-button" @click="removeBlock(index)" title="Удалить">
                         <FontAwesomeIcon icon="trash"/>
                     </button>
                 </div>
@@ -109,7 +109,7 @@
         </div>
         <div class="d-flex flex-row gap-2" v-if="!isSaving">
             <button class="btn btn-success flex-grow-1" @click="save()">Сохранить</button>
-            <button class="btn btn-danger" v-if="!!pageData" @click="deletePage()"><FontAwesomeIcon icon="trash"/></button>
+            <button class="btn btn-danger" v-if="!!pageData" @click="deletePage()"><FontAwesomeIcon icon="trash" title="Удалить страницу"/></button>
         </div>
         <div v-else>
             Идёт сохранение
@@ -167,6 +167,8 @@
     }
 
     const router = useRouter()
+
+    const haveChanges = ref(false)
 
     const defaultBlocks: IBlock[] = []
     const defaultHashtags: String[] = []

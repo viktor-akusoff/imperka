@@ -1,6 +1,7 @@
 <template>
     <div v-if="isLoading">Загрузка...</div>
     <div v-else-if="pageData">
+        <router-link class="btn btn-sm btn-outline-success mb-2" :to="`/edit?page=${route.params.page}`" v-if="isAuthenticated" title="Редактировать страницу"><FontAwesomeIcon icon="pencil" /></router-link>
         <div class="header-block">
             <PageHeader 
                 :titleText="pageData.header.title" 
@@ -31,12 +32,17 @@
                 </template>
             </div>
         </div>
-        <router-link class="btn btn-sm btn-success mt-2" :to="`/edit?page=${route.params.page}`" v-if="isAuthenticated">Редактировать</router-link>
     </div>
     <div v-else>Ошибка 404: Страница не найдена</div> 
 </template>
   
 <script setup lang="ts">
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faPencil } from '@fortawesome/free-solid-svg-icons'
+library.add(faPencil)
+
+
 import axios from 'axios'
 
 const pageData = ref(null)
