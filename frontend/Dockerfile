@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 
 COPY . .
 RUN echo "NUXT_PUBLIC_API_URL=${API_URL}" > ./.env
-RUN npm ci && npm run build
+RUN npm install && npm run build
 
 FROM node:lts-slim as run-stage
 
