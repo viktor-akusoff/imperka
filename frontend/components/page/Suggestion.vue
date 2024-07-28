@@ -2,7 +2,7 @@
     <div v-if="isLoading">Идёт загрузка</div>
     <div v-else-if="error">Ошибка 404!</div>
     <div v-else class="d-flex flex-row flex-wrap gap-3 justify-content-center">
-        <router-link :to="`/${page.slug}`" v-for="(page, index) in pages" :key="index">
+        <router-link :to="`/${page.slug}`" v-for="(page, index) in pages" :key="index" class="card-link">
             <div class="card bg-dark text-white" >
                 <img
                     v-if="page.header.media_type === 'image' && page.header.media_source"
@@ -86,5 +86,13 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        filter: grayscale(90%);
+        transition: 0.2s filter linear, 0.2s -webkit-filter linear
+    }
+    .card-link:hover .card-img-top {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: grayscale(0%)
     }
 </style>

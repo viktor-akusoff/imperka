@@ -3,6 +3,12 @@
   <div class="container pt-5 pb-5 d-flex flex-column gap-5">
     <TopBar/>
     <NuxtPage/>
+    <div class="footer">
+      <hr/>
+      <p style="font-family: sans-serif;" class="text-center">
+        © Copyright 2024 Кирилл Волошин, Все права защищены.
+      </p>
+    </div>
   </div>
 </template>
 
