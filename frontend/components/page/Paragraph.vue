@@ -1,5 +1,5 @@
 <template>
-    <div class="paragraph-block">
+    <div class="paragraph-block mt-5">
         <h1 :class="['paragraph-block__title', titleAlignment]">{{ titleText }}</h1>
         <div class="paragraph-block__container ql-editor" ref="slotContent" v-show="slotLength">
             <slot></slot>
@@ -34,6 +34,7 @@
 
     .paragraph-block__container {
         @extend .rounded;
+        @extend .mt-2;
         @extend .p-5;
         @include with_border;
         background: white;
@@ -42,7 +43,6 @@
 
     .paragraph-block__title {
         @extend .title-text;
-        @extend .pb-3;
 
         font-size: 1.5rem;
 
