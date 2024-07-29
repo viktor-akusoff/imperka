@@ -3,7 +3,6 @@ FROM python:3.11
 WORKDIR /code
  
 COPY ./requirements.txt /code/requirements.txt
-COPY ./entrypoint.sh /code/entrypoint.sh
  
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
@@ -17,4 +16,4 @@ COPY ./app /code/app
 
 EXPOSE 8000
 
-ENTRYPOINT ["sh", "/code/entrypoint.sh" ]
+ENTRYPOINT ["sh", "/code/app/entrypoint.sh" ]
