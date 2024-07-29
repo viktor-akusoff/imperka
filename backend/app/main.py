@@ -11,7 +11,7 @@ async def lifespan(app: FastAPI):
     print("Closing the database...")
     db.close()
 
-app = FastAPI(openapi_prefix='/api/v1', lifespan=lifespan)
+app = FastAPI(openapi_prefix='/api/v1', lifespan=lifespan, redirect_slashes=False)
 
 app.add_middleware(
     CORSMiddleware,
