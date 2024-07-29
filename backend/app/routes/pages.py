@@ -22,7 +22,7 @@ def serialize_page(page: dict):
     page["_id"] = str(page["_id"])
     return page
 
-@router.post("/", response_model=Page, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=Page, status_code=status.HTTP_201_CREATED)
 async def create_page(page: Page, current_user: User = Depends(security.get_current_user)):
     
     page_data = page.model_dump()
