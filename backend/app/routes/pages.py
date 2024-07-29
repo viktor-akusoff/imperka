@@ -10,7 +10,7 @@ from app.models.pages import Page, PreviewPage, MenuPage
 
 pages_collection = db['pages']
 
-router = APIRouter(prefix="/pages", tags=["Pages"])
+router = APIRouter(prefix="/pages", tags=["Pages"], redirect_slashes=False)
 
 def get_page_by_slug(slug: str):
     page = pages_collection.find_one({"slug": slug})

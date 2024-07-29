@@ -12,7 +12,7 @@ from app.models.auth import TokensResponse, RefreshTokenRequest, User
 USERNAME = settings.username
 PASSWORD = settings.password
 
-router = APIRouter(prefix='/auth', tags=["Authentication"])
+router = APIRouter(prefix='/auth', tags=["Authentication"], redirect_slashes=False)
 
 @router.post('/token', response_model=TokensResponse)
 def login(form_data: OAuth2PasswordRequestForm = Depends()):

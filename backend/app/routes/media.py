@@ -9,7 +9,7 @@ from fastapi.responses import JSONResponse
 
 fs = gridfs.GridFS(db) 
 
-router = APIRouter(prefix="/media", tags=["Media"])
+router = APIRouter(prefix="/media", tags=["Media"], redirect_slashes=False)
 
 @router.get("/{media_id}")
 async def get_media(media_id: str):
