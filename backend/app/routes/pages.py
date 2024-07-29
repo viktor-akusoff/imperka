@@ -40,7 +40,7 @@ async def create_page(page: Page, current_user: User = Depends(security.get_curr
     return serialize_page(created_page)
 
 
-@router.get("/", response_model=List[PreviewPage])
+@router.get("", response_model=List[PreviewPage])
 async def get_all_pages(hashtags: Optional[List[str]] = Query(None)):
     query = {}
     if hashtags:
