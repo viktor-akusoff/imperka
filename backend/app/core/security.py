@@ -4,7 +4,7 @@ from fastapi import Depends, status, HTTPException
 from datetime import datetime, timedelta
 from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer
-from core.config import settings
+from app.core.config import settings
 from jwt.exceptions import InvalidTokenError
 import jwt
 import pytz

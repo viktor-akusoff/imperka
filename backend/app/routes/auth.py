@@ -4,9 +4,9 @@ from typing import Annotated
 from datetime import timedelta
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
-from core.config import settings
-from core import security
-from models.auth import TokensResponse, RefreshTokenRequest, User
+from app.core.config import settings
+from app.core import security
+from app.models.auth import TokensResponse, RefreshTokenRequest, User
 
 
 USERNAME = settings.username
