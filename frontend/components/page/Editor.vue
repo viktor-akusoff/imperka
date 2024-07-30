@@ -357,7 +357,7 @@
                 await router.push(`/${response.data.slug}`)
                 router.go()
             } else {
-                const response = await apiClient.post('/pages/', pageData)
+                const response = await apiClient.post('/pages', pageData)
                 await router.push(`/${response.data.slug}`)
                 router.go()
             }
