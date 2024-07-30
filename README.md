@@ -1,5 +1,7 @@
 # Imperka CMS - Simple and Flexible Content Management System
 
+[2024-07-31 00-34-54.webm](https://github.com/user-attachments/assets/49986d6a-ca3f-42ee-a2fe-ee3166a64f08)
+
 Imperka CMS is a self-hosted content management system (CMS) built for simplicity, flexibility, and ease of use. It's designed to empower you to create and manage beautiful websites with complete control over content and design. 
 
 This project leverages a modern tech stack, including FastAPI for the backend, Nuxt.js for the frontend, and MongoDB for the database, ensuring high performance, scalability, and security.
