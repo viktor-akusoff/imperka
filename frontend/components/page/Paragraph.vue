@@ -1,5 +1,5 @@
 <template>
-    <div class="paragraph-block mt-5">
+    <div class="paragraph-block mb-5">
         <h1 :class="['paragraph-block__title', titleAlignment]">{{ titleText }}</h1>
         <div class="paragraph-block__container ql-editor" ref="slotContent" v-show="slotLength">
             <slot></slot>
